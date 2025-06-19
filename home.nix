@@ -11,7 +11,12 @@
     tmux
     fzf
     ripgrep
+    zsh
+    ghostty
+    gnumake
   ];
+
+  programs.home-manager.enable = true;
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -21,6 +26,4 @@
       modifier = "Mod4";
     };
   };
-
-  programs.home-manager.enable = true;
 }

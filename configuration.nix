@@ -8,11 +8,10 @@
   nix.settings.experimental-features = ["nix-command" "flakes" ];
 
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -26,10 +25,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/New_York";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -44,31 +40,33 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  services.xserver = {
+    enable = true;
+    windowManager.i3.enable = true;
+    xkb = {
+      layout = "us";
+      variant = "";
+      options = "caps:ctrl";
+    };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [
+   vim
+   zsh
+  ];
+
   users.users.lance = {
     isNormalUser = true;
     description = "Lance";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   wget
-   git
-   tmux
-  ];
+  environment.shells = [ pkgs.zsh ];
+  programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
