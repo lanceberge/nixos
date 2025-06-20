@@ -46,7 +46,7 @@
     xkb = {
       layout = "us";
       variant = "";
-      options = "ctrl:swapcaps";
+      options = "caps:ctrl_modifier";
     };
   };
 
@@ -55,6 +55,7 @@
   environment.systemPackages = with pkgs; [
    vim
    zsh
+   oh-my-zsh
   ];
   environment.variables = {
     XDG_CONFIG_HOME = "$HOME/dotfiles/.config";
@@ -69,10 +70,21 @@
   };
 
   environment.shells = [ pkgs.zsh ];
-  programs.zsh.enable = true;
-  programs.zsh.ohMyZsh = {
+  programs.zsh = {
     enable = true;
-    plugins = [ "git" "sudo" "docker" "kubectl" ];
+    enableCompletion = true;
+    autosuggestions.enable = true;
+
+    ohMyZsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "sudo"
+        "docker"
+        "kubectl"
+        "vi-mode"
+      ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
