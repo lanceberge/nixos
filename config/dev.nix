@@ -13,6 +13,9 @@
     neovim
     cmake
     xclip
+    ispell
+    libtool
+    docker
 
     # LSPs
     typescript-language-server
@@ -31,5 +34,10 @@
     rustc
     cargo
     go
+
+    # Language tools
+    stylua
+    prettier
+    shfmt
   ];
 }
