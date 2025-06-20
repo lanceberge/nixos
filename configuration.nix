@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  nix.settings.experimental-features = ["nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   imports =
     [
@@ -55,11 +55,22 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-   vim
-   zsh
-   oh-my-zsh
-   brightnessctl
+    vim
+    zsh
+    oh-my-zsh
+    brightnessctl
+    redshift
   ];
+
+  services.redshift = {
+    enable = true;
+    temperature = {
+      day = 4000;
+      night = 4000;
+    };
+    latitude = "37.2349";
+    longitude = "-115.8108";
+  };
 
   environment.variables = {
     XDG_CONFIG_HOME = "$HOME/dotfiles/.config";
@@ -70,6 +81,11 @@
     description = "Lance";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
+  };
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false; # Allow wheel group to use sudo without password
   };
 
   environment.shells = [ pkgs.zsh ];
@@ -107,7 +123,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

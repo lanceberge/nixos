@@ -39,5 +39,6 @@
     stylua
     prettier
     shfmt
+    nixpkgs-fmt
   ];
 }
