@@ -14,13 +14,4 @@
   ];
 
   programs.home-manager.enable = true;
-
-#   xsession.windowManager.i3 = {
-#     enable = true;
-#     package = pkgs.i3;
-#     config = {
-#       terminal = "ghostty";
-#       modifier = "Mod4";
-#     };
-#   };
 }

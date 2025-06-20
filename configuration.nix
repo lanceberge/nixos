@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -15,15 +11,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  # Enable networking
+  networking.networkmanager.enable = true;
+  networking.hostName = "nixos";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -42,7 +37,14 @@
 
   services.xserver = {
     enable = true;
-    windowManager.i3.enable = true;
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        networkmanagerapplet
+      ];
+    };
     xkb = {
       layout = "us";
       variant = "";
@@ -56,7 +58,9 @@
    vim
    zsh
    oh-my-zsh
+   brightnessctl
   ];
+
   environment.variables = {
     XDG_CONFIG_HOME = "$HOME/dotfiles/.config";
   };
@@ -65,7 +69,6 @@
     isNormalUser = true;
     description = "Lance";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
     shell = pkgs.zsh;
   };
 
@@ -114,4 +117,6 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
+  services.pipewire.enable = false;
+  services.pulseaudio.enable = true;
 }
