@@ -46,7 +46,7 @@
     xkb = {
       layout = "us";
       variant = "";
-      options = "caps:ctrl";
+      options = "ctrl:swapcaps";
     };
   };
 
@@ -56,6 +56,9 @@
    vim
    zsh
   ];
+  environment.variables = {
+    XDG_CONFIG_HOME = "$HOME/dotfiles/.config";
+  };
 
   users.users.lance = {
     isNormalUser = true;
@@ -67,6 +70,10 @@
 
   environment.shells = [ pkgs.zsh ];
   programs.zsh.enable = true;
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" "sudo" "docker" "kubectl" ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
