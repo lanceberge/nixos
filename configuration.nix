@@ -11,6 +11,24 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  fonts = {
+    packages = with pkgs; [
+      dejavu_fonts
+      noto-fonts-emoji
+      noto-fonts
+    ];
+
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "DejaVu Sans Mono" "Noto Color Emoji" ];
+        sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
+        serif = [ "Noto Serif" "Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
+
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = "nixos";
@@ -35,6 +53,16 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  environment.systemPackages = with pkgs; [
+    vim
+    zsh
+    oh-my-zsh
+    brightnessctl
+    redshift
+    polybarFull
+    upower
+  ];
+
   services.xserver = {
     enable = true;
     windowManager.i3 = {
@@ -54,13 +82,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    vim
-    zsh
-    oh-my-zsh
-    brightnessctl
-    redshift
-  ];
+  systemd.user.services.polybar = {
+    description = "Polybar status bar";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.polybar}/bin/polybar top";
+      Restart = "on-failure";
+    };
+  };
 
   services.redshift = {
     enable = true;
@@ -135,4 +165,5 @@
 
   services.pipewire.enable = false;
   services.pulseaudio.enable = true;
+
 }

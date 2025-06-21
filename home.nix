@@ -11,6 +11,7 @@
 
   imports = [
     ./config/dev.nix
+    ./config/polybar.nix
   ];
 
   programs.home-manager.enable = true;
