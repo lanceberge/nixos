@@ -16,6 +16,8 @@
     ispell
     libtool
     docker
+    (lib.setPrio 0 nodePackages.prettier)
+    lsof
 
     # LSPs
     typescript-language-server
@@ -34,11 +36,12 @@
     rustc
     cargo
     go
+    php84
 
     # Language tools
     stylua
-    prettier
     shfmt
     nixpkgs-fmt
+    php84Packages.composer
   ];
 }
