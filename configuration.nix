@@ -111,7 +111,7 @@
   users.users.lance = {
     isNormalUser = true;
     description = "Lance";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
   };
 
@@ -162,4 +162,13 @@
   services.pipewire.enable = false;
   services.pulseaudio.enable = true;
   services.upower.enable = true;
+
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+  systemd.user.services.docker.environment.DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
 }
