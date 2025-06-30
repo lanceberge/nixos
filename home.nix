@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-
   home.username = "lance";
   home.homeDirectory = "/home/lance";
   home.stateVersion = "25.05";
@@ -11,8 +10,12 @@
 
   imports = [
     ./config/dev.nix
-    ./config/polybar.nix
   ];
 
   programs.home-manager.enable = true;
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    systemd.enable = true;
+  };
 }

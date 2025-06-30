@@ -11,8 +11,28 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  environment.systemPackages = with pkgs; [
+    vim
+    zsh
+    oh-my-zsh
+    brightnessctl
+    redshift
+    upower
+    waybar
+    wofi
+    hyprlock
+    nautilus
+    hyprshot
+    adwaita-icon-theme
+    swaybg
+  ];
+
   fonts = {
     packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.fira-code
+      nerd-fonts.hack
+
       dejavu_fonts
       noto-fonts-emoji
       noto-fonts
@@ -21,10 +41,7 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "DejaVu Sans Mono" "Noto Color Emoji" ];
-        sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
-        serif = [ "Noto Serif" "Noto Color Emoji" ];
-        emoji = [ "Noto Color Emoji" ];
+        monospace = [ "FiraCode Nerd Font Mono" ];
       };
     };
   };
@@ -32,6 +49,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = "nixos";
+  # networking.wireless.iwd.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -53,26 +71,14 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  environment.systemPackages = with pkgs; [
-    vim
-    zsh
-    oh-my-zsh
-    brightnessctl
-    redshift
-    polybarFull
-    upower
-  ];
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   services.xserver = {
-    enable = true;
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        networkmanagerapplet
-      ];
-    };
+    enable = false;
     xkb = {
       layout = "us";
       variant = "";
@@ -80,17 +86,13 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  systemd.user.services.polybar = {
-    description = "Polybar status bar";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.polybar}/bin/polybar top";
-      Restart = "on-failure";
-    };
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
   };
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  nixpkgs.config.allowUnfree = true;
 
   services.redshift = {
     enable = true;
@@ -150,14 +152,14 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = true;
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];
+  };
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05";
 
   services.pipewire.enable = false;
   services.pulseaudio.enable = true;
-
+  services.upower.enable = true;
 }

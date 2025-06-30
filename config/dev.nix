@@ -8,7 +8,7 @@
     fzf
     ripgrep
     zsh
-    ghostty
+    alacritty
     gnumake
     neovim
     cmake
