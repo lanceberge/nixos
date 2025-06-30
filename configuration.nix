@@ -25,6 +25,9 @@
     hyprshot
     adwaita-icon-theme
     swaybg
+    networkmanagerapplet
+    bluez
+    blueman
   ];
 
   fonts = {
@@ -72,11 +75,6 @@
   };
 
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   services.xserver = {
     enable = false;
     xkb = {
@@ -91,6 +89,11 @@
     wayland.enable = true;
   };
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -171,4 +174,8 @@
     };
   };
   systemd.user.services.docker.environment.DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 }
