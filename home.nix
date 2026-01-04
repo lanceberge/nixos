@@ -6,6 +6,8 @@
 
   home.packages = with pkgs; [
     brave
+    spotify
+    hypridle
   ];
 
   imports = [

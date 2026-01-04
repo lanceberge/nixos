@@ -2,8 +2,10 @@
 {
   home.packages = with pkgs; [
     # Tools
+    bash
     emacs
     git
+    gh
     tmux
     fzf
     ripgrep
@@ -16,8 +18,15 @@
     ispell
     libtool
     docker
-    (lib.setPrio 0 nodePackages.prettier)
     lsof
+    zip
+    unzip
+    jq
+    pkg-config
+
+    # Node
+    (lib.setPrio 0 nodePackages.prettier)
+    nodePackages.tailwindcss
 
     # LSPs
     typescript-language-server
@@ -37,6 +46,7 @@
     cargo
     go
     php84
+    elixir
 
     # Language tools
     stylua

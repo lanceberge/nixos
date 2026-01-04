@@ -21,6 +21,7 @@
     waybar
     wofi
     hyprlock
+    hyprpaper
     nautilus
     hyprshot
     adwaita-icon-theme
@@ -28,6 +29,7 @@
     networkmanagerapplet
     bluez
     blueman
+    playerctl
   ];
 
   fonts = {
@@ -178,4 +180,18 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_16;
+    settings = {
+      port = 5432;
+    };
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all postgres trust
+      local all lance trust
+      host all postgres 127.0.0.1/32 trust
+      host all lance 127.0.0.1/32 trust
+    '';
+  };
 }
