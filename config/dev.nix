@@ -23,6 +23,10 @@
     unzip
     jq
     pkg-config
+    zlib
+    watchman
+    openssl
+    curl
 
     # Node
     (lib.setPrio 0 nodePackages.prettier)

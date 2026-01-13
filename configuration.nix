@@ -125,6 +125,8 @@
     wheelNeedsPassword = false;
   };
 
+  programs.nix-ld.enable = true;
+
   environment.shells = [ pkgs.zsh ];
   programs.zsh = {
     enable = true;
