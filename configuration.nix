@@ -12,9 +12,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   environment.systemPackages = with pkgs; [
-    vim
-    zsh
-    oh-my-zsh
     brightnessctl
     redshift
     upower
@@ -99,14 +96,17 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  location = {
+    latitude = 37.2349;
+    longitude = -115.8108;
+  };
+
   services.redshift = {
     enable = true;
     temperature = {
-      day = 4000;
-      night = 4000;
+      day = 5000;
+      night = 9000;
     };
-    latitude = "37.2349";
-    longitude = "-115.8108";
   };
 
   environment.variables = {
@@ -179,9 +179,32 @@
   };
   systemd.user.services.docker.environment.DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
 
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
+  hardware.enableRedistributableFirmware = true;
+  hardware.enableAllFirmware = true;
+  boot.extraModprobeConfig = ''
+    options iwlwifi bt_coex_active=0
+    options iwlwifi swcrypto=1
+    options iwlwifi power_save=0
+    options iwlwifi uapsd_disable=1
+    options iwlwifi d0i3_disable=1
+    options iwlmvm power_scheme=1
+  '';
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        ControllerMode = "bredr";
+        Experimental = true;
+        FastConnectable = true;
+      };
+      Policy = {
+        AutoEnable = true;
+      };
+    };
+  };
 
   services.postgresql = {
     enable = true;

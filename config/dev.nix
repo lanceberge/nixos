@@ -2,6 +2,9 @@
 {
   home.packages = with pkgs; [
     # Tools
+    vim
+    zsh
+    oh-my-zsh
     bash
     emacs
     git
@@ -27,6 +30,8 @@
     watchman
     openssl
     curl
+    wtype
+    dnslookup
 
     # Node
     (lib.setPrio 0 nodePackages.prettier)
