@@ -32,6 +32,8 @@
     curl
     wtype
     dnslookup
+    inotify-tools
+    google-chrome
 
     # Node
     (lib.setPrio 0 nodePackages.prettier)
