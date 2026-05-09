@@ -9,6 +9,7 @@
     emacs
     git
     gh
+    jujutsu
     tmux
     fzf
     ripgrep
@@ -30,10 +31,12 @@
     watchman
     openssl
     curl
+    sqlite
     wtype
     dnslookup
     inotify-tools
     google-chrome
+    awscli2
 
     # Node
     (lib.setPrio 0 nodePackages.prettier)

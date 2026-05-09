@@ -21,6 +21,7 @@
     hyprpaper
     nautilus
     hyprshot
+    wl-clipboard
     adwaita-icon-theme
     swaybg
     networkmanagerapplet
@@ -126,6 +127,12 @@
   };
 
   programs.nix-ld.enable = true;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
 
   environment.shells = [ pkgs.zsh ];
   programs.zsh = {
