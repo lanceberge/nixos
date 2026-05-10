@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   home.packages = with pkgs; [
     # Tools
@@ -9,7 +9,7 @@
     emacs
     git
     gh
-    jujutsu
+    pkgs-unstable.jujutsu
     tmux
     fzf
     ripgrep
@@ -37,6 +37,7 @@
     inotify-tools
     google-chrome
     awscli2
+    htop
 
     # Node
     (lib.setPrio 0 nodePackages.prettier)
